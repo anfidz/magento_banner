@@ -63,13 +63,13 @@ class Kolibrii_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controll
                     ->save();
                
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully saved'));
-                Mage::getSingleton('adminhtml/session')->set<Module>Data(false);
+                Mage::getSingleton('adminhtml/session')->setBannerData(false);
  
                 $this->_redirect('*/*/');
                 return;
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                Mage::getSingleton('adminhtml/session')->set<Module>Data($this->getRequest()->getPost());
+                Mage::getSingleton('adminhtml/session')->setBannerData($this->getRequest()->getPost());
                 $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             }
@@ -81,9 +81,9 @@ class Kolibrii_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controll
     {
         if( $this->getRequest()->getParam('id') > 0 ) {
             try {
-                $<module>Model = Mage::getModel('<module>/<module>');
+                $bannerModel = Mage::getModel('banner/banner');
                
-                $<module>Model->setId($this->getRequest()->getParam('id'))
+                $bannerModel->setId($this->getRequest()->getParam('id'))
                     ->delete();
                    
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Item was successfully deleted'));
@@ -103,7 +103,7 @@ class Kolibrii_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controll
     {
         $this->loadLayout();
         $this->getResponse()->setBody(
-               $this->getLayout()->createBlock('<module>/adminhtml_<module>_grid')->toHtml()
+               $this->getLayout()->createBlock('banner/adminhtml_banner_grid')->toHtml()
         );
     }
 }
