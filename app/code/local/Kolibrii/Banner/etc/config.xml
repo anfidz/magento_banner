@@ -2,27 +2,32 @@
 <config>
     <modules>
         <Kolibrii_Banner>
-            <version>1.0.0</version>
+            <version>0.1.0</version>
         </Kolibrii_Banner>
     </modules>
-    <frontend>
-        <routers>
+    
+    <global>
+        <models>
             <banner>
-                <use>standard</use>
-                <args>
-                    <module>Kolibrii_Banner</module>
-                    <frontName>banner</frontName>
-                </args>
+                <class>Kolibrii_Banner_Model</class>
+                <resourceModel>banner_mysql4</resourceModel>
             </banner>
-        </routers>
-        <layout>
-            <updates>
-                <banner>
-                    <file>banner.xml</file>
-                </banner>
-            </updates>
-        </layout>
-    </frontend>
+            <banner_mysql4>
+                <class>Kolibrii_Banner_Model_Mysql4</class>
+            </banner_mysql4>
+        </models>
+        <blocks>
+            <banner>
+                <class>Kolibrii_Banner_Block</class>
+            </banner>
+        </blocks>
+        <helpers>
+            <banner>
+                <class>Kolibrii_Banner_Helper</class>
+            </banner>  
+        </helpers>
+    </global>
+    
     <admin>
         <routers>
             <banner>
@@ -34,35 +39,45 @@
             </banner>
         </routers>
     </admin>
+    
     <adminhtml>
+        <translate>
+            <modules>
+                <kolibrii_adminhtml>
+                    <files>
+                        <banner>Kolibrii_Banner.csv</banner>
+                    </files>
+                </kolibrii_adminhtml>
+            </modules>
+        </translate>
+        
         <menu>
-            <banner module="banner">
-                <title>Banner</title>
-                <sort_order>71</sort_order>               
+            <catalog>
                 <children>
-                    <items module="banner">
-                        <title>Manage Items</title>
-                        <sort_order>0</sort_order>
-                        <action>banner/adminhtml_banner</action>
-                    </items>
+                    <banner_adminform translate="title" module="banner">
+                        <title>My Form</title>
+                        <action>banner/adminhtml_myform</action>
+                    </banner_adminform>
                 </children>
-            </banner>
+            </catalog>
         </menu>
+        
         <acl>
             <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
                 <admin>
                     <children>
-                        <banner>
-                            <title>Banner Module</title>
-                            <sort_order>200</sort_order>
-                        </banner>
+                        <catalog>
+                            <children>
+                                <banner_adminform>
+                                    <title>My Form</title>
+                                </banner_adminform>
+                            </children>
+                        </catalog>
                     </children>
                 </admin>
-            </resources>   
+            </resources>
         </acl>
+        
         <layout>
             <updates>
                 <banner>
@@ -70,53 +85,5 @@
                 </banner>
             </updates>
         </layout>
-    </adminhtml>   
-    <global>
-        <models>
-            <banner>
-                <class>Kolibrii_Banner_Model</class>
-                <resourceModel>banner_mysql4</resourceModel>
-            </banner>
-            <banner_mysql4>
-                <class>Kolibrii_Banner_Model_Mysql4</class>
-                <entities>
-                    <banner>
-                        <table>banner</table>
-                    </banner>
-                </entities>
-            </banner_mysql4>
-        </models>
-        <resources>
-            <banner_setup>
-                <setup>
-                    <module>Kolibrii_Banner</module>
-                </setup>
-                <connection>
-                    <use>core_setup</use>
-                </connection>
-            </banner_setup>
-            <banner_write>
-                <connection>
-                    <use>core_write</use>
-                </connection>
- 
- 
-            </banner_write>
-            <banner_read>
-                <connection>
-                    <use>core_read</use>
-                </connection>
-            </banner_read>
-        </resources>
-        <blocks>
-            <banner>
-                <class>Kolibrii_Banner_Block</class>
-            </banner>
-        </blocks>
-        <helpers>
-            <banner>
-                <class>Kolibrii_Banner_Helper</class>
-            </banner>
-        </helpers>
-    </global>
+    </adminhtml>
 </config>
